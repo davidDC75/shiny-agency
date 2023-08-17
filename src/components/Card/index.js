@@ -1,3 +1,5 @@
+import defaultPicture from '../../assets/logo.svg';
+
 import PropTypes from 'prop-types';
 
 function Card({ label, title, picture }) {
@@ -11,13 +13,15 @@ function Card({ label, title, picture }) {
 }
 
 Card.propTypes = {
-    label: PropTypes.string,
+    label: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    picture: PropTypes.string
+    picture: PropTypes.string.isRequired
 }
 
 Card.defaultProps = {
-    title: 'Mon titre par défaut'
+    label: 'Mon label par défaut',
+    title: 'Mon titre par défaut',
+    picture: defaultPicture
 }
 
 export default Card;

@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function Survey() {
     const { questionNumber } = useParams();
@@ -34,4 +35,7 @@ function Survey() {
     );
 }
 
+Survey.propTypes = {
+    questionNumber: PropTypes.string
+}
 export default Survey;
