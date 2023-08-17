@@ -1,6 +1,8 @@
 function Freelances() {
     return (
-        <h1>Freelances</h1>
+        <div>
+            <h1>Freelances</h1>
+        </div>
     );
 }
 

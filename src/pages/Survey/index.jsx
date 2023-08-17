@@ -2,10 +2,12 @@ import { useParams, Link } from 'react-router-dom';
 
 function Survey() {
     const { questionNumber } = useParams();
+    const questionNumberInt = parseInt(questionNumber);
+
     const questionPrecedente =
-        Number(questionNumber) === 1 ? 1 : Number(questionNumber) - 1;
+        questionNumberInt === 1 ? 1 : questionNumberInt - 1;
     const questionSuivante =
-        Number(questionNumber) === 10 ? 50 : Number(questionNumber) + 1;
+    questionNumberInt === 10 ? 50 : questionNumberInt + 1;
 
     // Affiche les liens si nécessaire
     const isQuestionPrecedente =
