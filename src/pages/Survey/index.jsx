@@ -16,7 +16,9 @@ function Survey() {
         );
 
     const isQuestionSuivante =
-        Number(questionNumber) === 10 ? null : (
+        Number(questionNumber) === 10 ?
+            <Link to="/results">Résultats</Link>
+        : (
             <Link to={'/survey/' + questionSuivante}>Question suivante</Link>
         );
 
