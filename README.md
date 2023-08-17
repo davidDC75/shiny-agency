@@ -1,6 +1,8 @@
 # Cours openclassrooms intermédiaires sur react.js
 
 - https://openclassrooms.com/fr/courses/7150606-creez-une-application-react-complete
+- https://www.figma.com/file/EigfmAsrypcKTqffY4D9Lc/Cours---Cr%C3%A9ez-une-application-React-compl%C3%A8te?type=design&node-id=0-1&mode=design
+- https://github.com/OpenClassrooms-Student-Center/7150606-React-intermediaire
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
