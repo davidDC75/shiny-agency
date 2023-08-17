@@ -12,10 +12,6 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Survey from './pages/Survey';
 
-// Les questionnaires
-import ClientForm from './components/ClientForm';
-import ClientFreelance from './components/ClientFreelance';
-
 import reportWebVitals from './reportWebVitals';
 
 // Ne fonctionne pas sous react version 17
@@ -32,10 +28,7 @@ ReactDOM.render(
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/survey" element={<Survey />}>
-                    <Route path="client" element={<ClientForm />} />
-                    <Route path="freelance" element={<ClientFreelance />} />
-                </Route>
+                <Route path="/survey" element={<Survey />} />
             </Routes>
         </Router>
     </React.StrictMode>,
