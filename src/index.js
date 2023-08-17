@@ -28,7 +28,7 @@ ReactDOM.render(
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/survey" element={<Survey />} />
+                <Route path="/survey/:questionNumber" element={<Survey />} />
             </Routes>
         </Router>
     </React.StrictMode>,
