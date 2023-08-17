@@ -7,9 +7,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import './styles/index.css';
 // import App from './components/App';
 
-import Header from './components/Header/Header';
+// Les pages
+import Header from './components/Header';
 import Home from './pages/Home';
 import Survey from './pages/Survey';
+
+// Les questionnaires
+import ClientForm from './components/ClientForm';
+import ClientFreelance from './components/ClientFreelance';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -26,12 +31,15 @@ ReactDOM.render(
         <Router>
             <Header />
             <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/survey' element={<Survey />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/survey" element={<Survey />}>
+                    <Route path="client" element={<ClientForm />} />
+                    <Route path="freelance" element={<ClientFreelance />} />
+                </Route>
             </Routes>
         </Router>
     </React.StrictMode>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
