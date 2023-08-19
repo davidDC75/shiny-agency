@@ -3,6 +3,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
 
 // import './styles/index.css';
 // import App from './components/App';
@@ -17,6 +18,11 @@ import Error from './components/Error';
 
 import reportWebVitals from './reportWebVitals';
 
+const GlobalStyle = createGlobalStyle`
+    div {
+        font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    }
+`;
 
 // Ne fonctionne pas sous react version 17
 // const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,6 +35,7 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
     <React.StrictMode>
         <Router>
+            <GlobalStyle />
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
