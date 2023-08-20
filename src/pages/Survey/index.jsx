@@ -116,7 +116,11 @@ function Survey() {
 
 
     if (error) {
-        return (<span>Oups il y a eu un problème</span>);
+        return (
+            <MainContainer>
+                <TitleH1>Oups il y a eu un problème</TitleH1>
+            </MainContainer>
+        );
     }
     // Affiche les liens si nécessaire
     const isQuestionPrecedente =
