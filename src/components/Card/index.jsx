@@ -39,12 +39,12 @@ const CartTitle = styled.span`
     color: ${colors.titleColor};
 `;
 
-function Card({ label, title, picture }) {
+function Card({ name, job, picture }) {
     return (
         <CardWrapper>
-            <CardLabel>{label}</CardLabel>
+            <CardLabel>{job}</CardLabel>
             <CardImage src={picture} alt="freelance" />
-            <CartTitle>{title}</CartTitle>
+            <CartTitle>{name}</CartTitle>
         </CardWrapper>
     );
 }

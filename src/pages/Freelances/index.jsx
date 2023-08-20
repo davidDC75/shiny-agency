@@ -1,33 +1,33 @@
-import DefaultPicture from '../../assets/breakcore.jpg';
-
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+//import DefaultPicture from '../../assets/breakcore.jpg';
 import Card from '../../components/Card';
-
 import colors from '../../utils/style/colors';
+import { Loader } from '../../utils/style/Atom';
 
-const freelanceProfiles = [
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Développeur frontend',
-        picture: DefaultPicture
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture
-    },
-    {
-        name: 'David DC',
-        jobTitle: 'Développeur back-end',
-        picture: DefaultPicture
-    }
-];
+// const freelanceProfiles = [
+//     {
+//         name: 'Jane Doe',
+//         jobTitle: 'Devops',
+//         picture: DefaultPicture
+//     },
+//     {
+//         name: 'John Doe',
+//         jobTitle: 'Développeur frontend',
+//         picture: DefaultPicture
+//     },
+//     {
+//         name: 'Jeanne Biche',
+//         jobTitle: 'Développeuse Fullstack',
+//         picture: DefaultPicture
+//     },
+//     {
+//         name: 'David DC',
+//         jobTitle: 'Développeur back-end',
+//         picture: DefaultPicture
+//     }
+// ];
 
 const DivContainer = styled.div`
     display: flex;
@@ -58,20 +58,55 @@ const CardsContainer = styled.div`
 `;
 
 function Freelances() {
+
+    // On initialise les states
+    const [ freelancersList, setFreelancesList] = useState([]);
+    const [ isDataLoading, setIsDataLoading] = useState(false);
+    const [ error, setError] = useState(null);
+
+    useEffect( () => {
+        async function fetchProfiles() {
+            setIsDataLoading(true);
+            try {
+                const response = await fetch(`http://localhost:8000/freelances`);
+                const { freelancersList } = await response.json();
+                console.log(freelancersList);
+                setFreelancesList(freelancersList);
+            }
+            catch(err) {
+                console.log(err);
+                setError(true);
+            }
+            finally {
+                setIsDataLoading(false);
+            }
+        }
+        fetchProfiles();
+    }, []);
+
+    if (error) {
+        return (<span>Oups il y a eu un problème</span>);
+    }
+
     return (
         <DivContainer>
             <Title>Trouvez votre prestataire</Title>
             <SpanContent>Chez shiny nous réunissons les meilleurs profils pour vous.</SpanContent>
-            <CardsContainer>
-                {freelanceProfiles.map((profile, index) => (
+            {isDataLoading ? (
+                <Loader />
+            ) : (
+                <CardsContainer>
+                {freelancersList.map((profile, index) => (
                     <Card
-                        key={`${profile.name}-${index}`}
-                        label={profile.jobTitle}
+                        key={`${profile.id}-${profile.name}`}
+                        name={profile.name}
+                        job={profile.job}
                         picture={profile.picture}
-                        title={profile.name}
                     />
                 ))}
-            </CardsContainer>
+                </CardsContainer>
+            )}
+
         </DivContainer>
     );
 }

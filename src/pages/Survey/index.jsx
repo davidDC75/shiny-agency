@@ -115,6 +115,9 @@ function Survey() {
     }, []);
 
 
+    if (error) {
+        return (<span>Oups il y a eu un problème</span>);
+    }
     // Affiche les liens si nécessaire
     const isQuestionPrecedente =
         questionNumberInt === 1 ? null : (
