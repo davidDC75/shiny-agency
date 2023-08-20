@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import colors from '../../utils/style/colors';
 import { Loader } from '../../utils/style/Atom';
+import { ThemeContext } from '../../utils/context';
 
 const MainContainer = styled.main`
     display: flex;
@@ -16,14 +17,14 @@ const MainContainer = styled.main`
 
 const TitleH1 = styled.h1`
     font-weight: 700;
-    color: ${colors.titleColor};
+    color: ${(props) => props.$isDarkMode ? 'white' : `${colors.titleColor}`};
     font-size: 45px;
 `;
 
 const TitleH2 = styled.h2`
     font-size: 25px;
     font-weight: 700;
-    color: ${colors.titleColor};
+    color: ${(props) => props.$isDarkMode ? 'white' : `${colors.titleColor}`};
     text-decoration-line: underline;
     text-decoration-color: ${colors.primary};
 `;
@@ -59,6 +60,7 @@ const QuestionButton = styled.button`
 
 const QuestionContent = styled.span`
     margin: 30px;
+    color: ${(props) => props.$isDarkMode ? 'white' : `${colors.titleColor}`};
 `;
 function Survey() {
 
@@ -78,6 +80,7 @@ function Survey() {
     const questionSuivante =
         questionNumberInt === 6 ? 6 : questionNumberInt + 1;
 
+    const { theme } = useContext(ThemeContext);
     // Chargement des données via l'API au premier appel du composant
     // useEffect( () => {
     //     setDataLoading(true);
@@ -139,12 +142,12 @@ function Survey() {
 
     return (
         <MainContainer>
-            <TitleH1>Questionnaire 🧮</TitleH1>
-            <TitleH2>Question {questionNumber}</TitleH2>
+            <TitleH1 $isDarkMode={theme === 'dark'}>Questionnaire 🧮</TitleH1>
+            <TitleH2 $isDarkMode={theme === 'dark'}>Question {questionNumber}</TitleH2>
             {isDataLoading ? (
                 <Loader />
             ) : (
-                <QuestionContent>{surveyData[questionNumber]}</QuestionContent>
+                <QuestionContent $isDarkMode={theme === 'dark'}>{surveyData[questionNumber]}</QuestionContent>
             )}
 
             <QuestionLinkContainer>

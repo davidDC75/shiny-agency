@@ -1,9 +1,12 @@
 //import { useState } from 'react';
+import { useContext } from 'react';
+
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logoAccueil from '../../assets/home.svg';
 import colors from '../../utils/style/colors';
+import { ThemeContext } from '../../utils/context';
 
 const HomeContainer = styled.main`
     width: 100%;
@@ -24,7 +27,7 @@ const LeftHomeContainer = styled.div`
 const Title = styled.h1`
     font-weight: 700;
     font-size: 50px;
-    color: ${colors.titleColor};
+    color: ${(props) => props.$isDarkMode ? 'white' : `${colors.titleColor}`};
 `;
 
 const StyledLink = styled(Link)`
@@ -57,11 +60,12 @@ function Home() {
     //         <Balloon size={size} />
     //     </HomeContainer>
     // );
+    const { theme } = useContext(ThemeContext);
 
     return (
         <HomeContainer>
             <LeftHomeContainer>
-                <Title>Repérez vos besoins,<br/>on s'occupe du reste,<br/>avec les meilleurs<br/>talents</Title>
+                <Title $isDarkMode={theme === 'dark'}>Repérez vos besoins,<br/>on s'occupe du reste,<br/>avec les meilleurs<br/>talents</Title>
                 <StyledLink to="/survey/1">Faire le test</StyledLink>
             </LeftHomeContainer>
             <ImageHome src={logoAccueil} alt="Logo Accueil" />
