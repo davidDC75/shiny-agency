@@ -3,7 +3,6 @@ import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
 
 // import './styles/index.css';
 // import App from './components/App';
@@ -15,14 +14,15 @@ import Survey from './pages/Survey';
 import Results from './pages/Results';
 import Freelances from './pages/Freelances';
 import Error from './components/Error';
+import Footer from './components/Footer';
+
+// On importe le contexte
+import { ThemeProvider } from './utils/context';
+import GlobalStyle from './utils/style/GlobalStyle';
+
 
 import reportWebVitals from './reportWebVitals';
 
-const GlobalStyle = createGlobalStyle`
-    div {
-        font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    }
-`;
 
 // Ne fonctionne pas sous react version 17
 // const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,15 +35,18 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
     <React.StrictMode>
         <Router>
-            <GlobalStyle />
-            <Header />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/survey/:questionNumber" element={<Survey />} />
-                <Route path="/results" element={<Results />} />
-                <Route path="/freelances" element={<Freelances />} />
-                <Route path="*" element={<Error />} />
-            </Routes>
+            <ThemeProvider>
+                <GlobalStyle />
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/survey/:questionNumber" element={<Survey />} />
+                    <Route path="/results" element={<Results />} />
+                    <Route path="/freelances" element={<Freelances />} />
+                    <Route path="*" element={<Error />} />
+                </Routes>
+                <Footer />
+            </ThemeProvider>
         </Router>
     </React.StrictMode>,
     document.getElementById('root'),
