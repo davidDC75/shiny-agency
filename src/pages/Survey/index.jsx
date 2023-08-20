@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import colors from '../../utils/style/colors';
 import { Loader } from '../../utils/style/Atom';
-import { ThemeContext } from '../../utils/context';
+import { ThemeContext, SurveyContext } from '../../utils/context';
 
 const MainContainer = styled.main`
     display: flex;
@@ -68,6 +68,7 @@ function Survey() {
     const [surveyData, setSurveyData] = useState({});
     // Boolean pour savoir si les questions sont en cours de loading
     const [isDataLoading, setDataLoading] = useState(false);
+
     const [error, setError] = useState(null);
 
     // Paramètre passé par l'url pour avoir la question en cours
@@ -80,7 +81,14 @@ function Survey() {
     const questionSuivante =
         questionNumberInt === 6 ? 6 : questionNumberInt + 1;
 
+    // On récupère les contextes
+    const { saveAnswers, answers } = useContext(SurveyContext);
     const { theme } = useContext(ThemeContext);
+
+    function saveReply(answer) {
+        saveAnswers({ [questionNumber]: answer });
+    }
+
     // Chargement des données via l'API au premier appel du composant
     // useEffect( () => {
     //     setDataLoading(true);
@@ -151,8 +159,18 @@ function Survey() {
             )}
 
             <QuestionLinkContainer>
-                <QuestionButton>Oui</QuestionButton>
-                <QuestionButton>Non</QuestionButton>
+                <QuestionButton
+                    onClick={() => saveReply(true)}
+                    disabled={answers[questionNumber]===true}
+                >
+                    Oui
+                </QuestionButton>
+                <QuestionButton
+                    onClick={() => saveReply(false)}
+                    disabled={answers[questionNumber]===false}
+                >
+                    Non
+                </QuestionButton>
             </QuestionLinkContainer>
             <QuestionLinkContainer>
                 {isQuestionPrecedente}
