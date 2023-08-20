@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import colors from '../../utils/style/colors';
+import { Loader } from '../../utils/style/Atom';
 
 const MainContainer = styled.main`
     display: flex;
@@ -54,14 +56,64 @@ const QuestionButton = styled.button`
         cursor: pointer;
     }
 `;
+
+const QuestionContent = styled.span`
+    margin: 30px;
+`;
 function Survey() {
+
+    // Objet contenant la liste des questions récupérées par l'api
+    const [surveyData, setSurveyData] = useState({});
+    // Boolean pour savoir si les questions sont en cours de loading
+    const [isDataLoading, setDataLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    // Paramètre passé par l'url pour avoir la question en cours
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
 
+    // Calcul pour les liens question précédente et suivante
     const questionPrecedente =
         questionNumberInt === 1 ? 1 : questionNumberInt - 1;
     const questionSuivante =
-        questionNumberInt === 10 ? 10 : questionNumberInt + 1;
+        questionNumberInt === 6 ? 6 : questionNumberInt + 1;
+
+    // Chargement des données via l'API au premier appel du composant
+    // useEffect( () => {
+    //     setDataLoading(true);
+    //     fetch(`http://localhost:8000/survey`)
+    //         .then( (response) => response.json()
+    //         .then( ({ surveyData }) => {
+    //             console.log(surveyData);
+    //             setSurveyData(surveyData);
+    //             setDataLoading(false);
+    //         })
+    //         .catch((error) => console.log(error))
+    //     )
+    // }, []);
+
+    // Chargement des données via l'API au premier appel du composant
+    // Mais cette voici en utilisant async, await et en gérant les erreurs
+    useEffect( () => {
+        async function fetchSurvey() {
+            setDataLoading(true);
+            try {
+                const response = await fetch(`http://localhost:8000/survey`);
+                const { surveyData } = await response.json();
+                console.log(surveyData);
+                setSurveyData(surveyData);
+            }
+            catch(err) {
+                console.log(err);
+                setError(true);
+            }
+            finally {
+                setDataLoading(false);
+            }
+        }
+        fetchSurvey()
+    }, []);
+
 
     // Affiche les liens si nécessaire
     const isQuestionPrecedente =
@@ -72,7 +124,7 @@ function Survey() {
         );
 
     const isQuestionSuivante =
-        questionNumberInt === 10 ? (
+        questionNumberInt === 6 ? (
             <QuestionLink to="/results">Résultats</QuestionLink>
         ) : (
             <QuestionLink to={'/survey/' + questionSuivante}>Question suivante</QuestionLink>
@@ -82,6 +134,12 @@ function Survey() {
         <MainContainer>
             <TitleH1>Questionnaire 🧮</TitleH1>
             <TitleH2>Question {questionNumber}</TitleH2>
+            {isDataLoading ? (
+                <Loader />
+            ) : (
+                <QuestionContent>{surveyData[questionNumber]}</QuestionContent>
+            )}
+
             <QuestionLinkContainer>
                 <QuestionButton>Oui</QuestionButton>
                 <QuestionButton>Non</QuestionButton>
